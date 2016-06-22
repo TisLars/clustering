@@ -10,7 +10,6 @@ import java.util.List;
 public class AlgorithmKMeans {
 
     private int TOTAL_CLUSTERS = 4;
-    private int TOTAL_ITERATIONS = 5;
 
     private List<Customer> customers;
     private List<Cluster> clusters;
@@ -70,7 +69,7 @@ public class AlgorithmKMeans {
 
             calculateSSE(clusters);
 
-            if (iteration==25)
+            if (iteration == 25)
                 break;
             if (distance == 0)
                 done = true;
@@ -125,19 +124,29 @@ public class AlgorithmKMeans {
         double min = max;
         int clusterId = 0;
         double distance = 0.0;
+        boolean allFilled = false;
 
-        for (Customer customer : customers) {
-            min = max;
-            for (int i = 0; i < TOTAL_CLUSTERS; i++) {
-                Cluster cluster = clusters.get(i);
-                distance = Customer.distance(customer.getPreferences(), cluster.getCentroid().getPreferences());
-                if (distance < min) {
-                    min = distance;
-                    clusterId = i;
+        while (!allFilled) {
+            for (Customer customer : customers) {
+                min = max;
+                for (int i = 0; i < TOTAL_CLUSTERS; i++) {
+                    Cluster cluster = clusters.get(i);
+                    distance = Customer.distance(customer.getPreferences(), cluster.getCentroid().getPreferences());
+                    if (distance < min) {
+                        min = distance;
+                        clusterId = i;
+                    }
                 }
+                customer.setCluster(clusterId);
+                clusters.get(clusterId).addCustomer(customer);
             }
-            customer.setCluster(clusterId);
-            clusters.get(clusterId).addCustomer(customer);
+            for (Cluster cluster : clusters) {
+                if (cluster.getCustomers().size() == 0) {
+                    allFilled = false;
+                    break;
+                }
+                allFilled = true;
+            }
         }
     }
 

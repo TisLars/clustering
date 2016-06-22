@@ -16,7 +16,7 @@ public class DataReader {
         BufferedReader br = null;
         String line = "";
         String cvsSplitBy = ",";
-        ArrayList<Customer> customers = new ArrayList<Customer>();
+        ArrayList<Customer> customers = new ArrayList<>();
         int count = 0;
 
         try {
@@ -32,8 +32,6 @@ public class DataReader {
                 }
                 count++;
             }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
