@@ -3,9 +3,15 @@
  */
 public class Program {
 
+    private static int TOTAL_ITERATIONS = 2;
+
     public static void main(String[] args) {
         AlgorithmKMeans clustering = new AlgorithmKMeans();
-        clustering.init();
-        clustering.calculate();
+        while (TOTAL_ITERATIONS > 0) {
+            clustering.init();
+            clustering.calculate();
+
+            TOTAL_ITERATIONS--;
+        }
     }
 }

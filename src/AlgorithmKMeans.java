@@ -10,6 +10,7 @@ import java.util.List;
 public class AlgorithmKMeans {
 
     private int TOTAL_CLUSTERS = 4;
+    private int TOTAL_ITERATIONS = 5;
 
     private List<Customer> customers;
     private List<Cluster> clusters;
@@ -67,9 +68,38 @@ public class AlgorithmKMeans {
             System.out.println("Centroid distance:\t " + distance);
             plotClusters();
 
+            calculateSSE(clusters);
+
+            if (iteration==50)
+                System.out.println("stop");
             if (distance == 0)
                 done = true;
         }
+    }
+
+    private void calculateSSE(List<Cluster> clusters) {
+        double sse = 0;
+        int index = 0;
+
+        for (Cluster cluster : clusters) {
+            List<Customer> customers = cluster.getCustomers();
+            for (Customer customer : customers) {
+                sse += calculateEuclidean(cluster.getCentroid().getPreferences(), customer.getPreferences());
+                index++;
+            }
+            System.out.println("SSE: " + sse);
+        }
+    }
+
+    private double calculateEuclidean(double[] centroid, double[] customer) {
+        double distance = 0;
+
+        for (int i = 0; i < centroid.length; i++) {
+            distance += (centroid[i] - customer[i]) * (centroid[i] - customer[i]);
+        }
+        distance = Math.sqrt(distance);
+
+        return distance;
     }
 
     private void clearClusters() {
@@ -113,14 +143,18 @@ public class AlgorithmKMeans {
 
     private void calculateCentroids() {
         for (Cluster cluster : clusters) {
-            double sum = 0;
-            int count = 0;
-
+            double[] preferences = new double[customers.get(0).getPreferences().length];
             List<Customer> customers = cluster.getCustomers();
 
-            for (Customer customer : customers) {
-
+            for (int i = 0; i < preferences.length; i++) {
+                double sum = 0;
+                for (Customer customer : customers) {
+                    sum += customer.getPreferences()[i];
+                }
+                preferences[i] = sum / customers.size();
             }
+            Customer centroid = new Customer(preferences);
+            cluster.setCentroid(centroid);
         }
     }
 }
