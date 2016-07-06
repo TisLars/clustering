@@ -45,15 +45,6 @@ public class Customer {
         return Math.sqrt(distance);
     }
 
-    public static Customer createRandomCentroid() {
-        double[] centroidPrefs = new double[32];
-
-        for (int i = 0; i < centroidPrefs.length; i++) {
-            centroidPrefs[i] = (Math.random() < .5) ? 0 : 1;
-        }
-        return new Customer(centroidPrefs);
-    }
-
     public String toString() {
         String customerStr = "";
         customerStr += "[";

@@ -3,6 +3,7 @@ import Models.Customer;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 /**
  * Created by larsh on 21-6-2016.
@@ -22,10 +23,13 @@ public class AlgorithmKMeans {
     public void init() {
         DataReader reader = new DataReader();
         customers = reader.readData();
+        Random random = new Random();
+        int n = random.nextInt(customers.size());
 
         for (int i = 0; i < TOTAL_CLUSTERS; i++) {
             Cluster cluster = new Cluster(i);
-            Customer centroid = Customer.createRandomCentroid();
+            Customer centroid = cluster.createRandomCentroid(customers.get(n).getPreferences());
+            n = random.nextInt(customers.size());
             cluster.setCentroid(centroid);
             clusters.add(cluster);
         }
@@ -78,13 +82,11 @@ public class AlgorithmKMeans {
 
     private void calculateSSE(List<Cluster> clusters) {
         double sse = 0;
-        int index = 0;
 
         for (Cluster cluster : clusters) {
             List<Customer> customers = cluster.getCustomers();
             for (Customer customer : customers) {
                 sse += calculateEuclidean(cluster.getCentroid().getPreferences(), customer.getPreferences());
-                index++;
             }
             System.out.println("SSE: " + sse);
         }

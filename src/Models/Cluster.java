@@ -34,6 +34,18 @@ public class Cluster {
         return centroid;
     }
 
+    public Customer createRandomCentroid(double[] preferences) {
+//        double[] centroidPrefs = new double[32];
+//
+//        for (int i = 0; i < centroidPrefs.length; i++) {
+//            centroidPrefs[i] = (Math.random() < .5) ? 0 : 1;
+//        }
+
+        Customer centroid = new Customer(preferences);
+
+        return centroid;
+    }
+
     public void setCentroid(Customer centroid) {
         this.centroid = centroid;
     }

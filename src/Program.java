@@ -3,7 +3,7 @@
  */
 public class Program {
 
-    private static int TOTAL_ITERATIONS = 1;
+    private static int TOTAL_ITERATIONS = 2;
 
     public static void main(String[] args) {
         while (TOTAL_ITERATIONS > 0) {
