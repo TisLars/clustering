@@ -73,8 +73,6 @@ public class AlgorithmKMeans {
 
             calculateSSE(clusters);
 
-            if (iteration == 25)
-                break;
             if (distance == 0)
                 done = true;
         }
