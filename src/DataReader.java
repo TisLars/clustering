@@ -1,9 +1,6 @@
 import Models.Customer;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 
 /**
@@ -23,6 +20,12 @@ public class DataReader {
             br = new BufferedReader(new FileReader(csvFile));
             while ((line = br.readLine()) != null) {
                 String[] value = line.split(cvsSplitBy);
+
+//                double prefs[] = new double[2];
+//                prefs[0] = Double.parseDouble(value[0]);
+//                prefs[1] = Double.parseDouble(value[1]);
+//
+//                customers.add(new Customer(prefs));
 
                 for (int i = 0; i < value.length; i++) {
                     if (i >= customers.size())

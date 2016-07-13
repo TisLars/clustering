@@ -8,13 +8,14 @@ import java.util.*;
  */
 public class AlgorithmKMeans {
 
-    private int TOTAL_CLUSTERS = 4;
+    private final int TOTAL_CLUSTERS;
 
     private List<Customer> customers;
     private List<Cluster> clusters, bestClusterSolution;
     private double newSumSquaredError, sumSquaredError;
 
-    public AlgorithmKMeans() {
+    public AlgorithmKMeans(int amountOfClusters) {
+        this.TOTAL_CLUSTERS = amountOfClusters;
         this.customers = new ArrayList<>();
         this.clusters = new ArrayList<>();
     }
@@ -49,7 +50,6 @@ public class AlgorithmKMeans {
 
     public void calculate() {
         boolean done = false;
-        int iteration = 0;
         sumSquaredError = Double.MAX_VALUE;
 
         while (!done) {
@@ -59,8 +59,6 @@ public class AlgorithmKMeans {
 
             List<Customer> lastCentroids = getCentroids();
             calculateCentroids();
-
-            iteration++;
 
             List<Customer> currentCentroids = getCentroids();
 
@@ -101,6 +99,7 @@ public class AlgorithmKMeans {
             distance += (centroid[i] - customer[i]) * (centroid[i] - customer[i]);
         }
         distance = Math.sqrt(distance);
+//        distance = Math.sqrt(Math.pow((centroid[0] - customer[0]), 2) + Math.pow((centroid[1] - customer[1]), 2));
 
         return distance;
     }
